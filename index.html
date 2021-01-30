@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Curise Booking</title>
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Roboto:wght@400;500;700&display=swap"
+        rel="stylesheet">
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+     <!--Header and Menu Section-->
+     <header class="container">
+        <nav>
+            <ul>
+                <li><a href="#">Home</a></li>
+                <li><a href="#">About Us</a></li>
+                <li><a href="#">Contact</a></li>
+                <li><a class="active" href="#">Sign Up</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!--Booking Section-->
+    <main class="main-content container">
+
+        <div class="booking-content">
+            <h1>Cruise Queen</h1>
+            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book./p>
+        </div>
+
+
+        <div class="booking-form">
+            <h3>Book Ocean Time</h3>
+            <div class="input-group">
+                <label for="">source From</label>
+                <input class="inp-style" type="text" name="" placeholder="Dhake, Bangladesh">
+            </div>
+            <div class="input-group">
+                <label for="">Destination To</label>
+                <input class="inp-style" type="text" name="" placeholder="Saint-martin, Bangladesh">
+            </div>
+            <div class="inputs">
+                <div class="input-group">
+                    <label" for="">Departure</label>
+                    <input class="inp-style" type="date" name="">
+                </div>
+                <div class="input-group">
+                    <label for="">Return</label>
+                    <input class="inp-style" type="date" name="">
+                </div>
+            </div>
+            <div class="input-group f-class">
+                <div>
+                    <label id="ticket-total" for="">First Class ($150)</label>
+                    <input id="ticket-count" class="inp-style inp-width" type="number" value="0" name="">
+                </div>
+                <div class="plus-minus-btn">
+                    <p class="plus"> <span onclick=" handleBuyChange('ticket', true);">+</span>  <span onclick=" handleBuyChange('ticket', false);">-</span> </p>
+                </div>
+            </div>
+            
+            <div class="input-group f-class">
+                <div>
+                    <label id="purchase-total" for="">Economy ($100)</label>
+                    <input id="purchase-count" class="inp-style inp-width" type="number" value="0" name="">
+                </div>
+                <div class="plus-minus-btn">
+                    <p class="minus"> <span onclick=" handleBuyChange('purchase', true);">+</span>  <span onclick=" handleBuyChange('purchase', false);">-</span> </p>
+                </div>
+            </div>
+            <div class="calculations">
+                <div class="amount">
+                    <div class="left">
+                        <p>Subtotal</p>
+                    </div>
+                    <div class="right">
+                        <p id="total-price">$500</p>
+                    </div>
+                </div>
+
+                <div class="amount">
+                    <div class="left">
+                        <p>Charge 10% VAT</p>
+                    </div>
+                    <div class="right">
+                        <p id="tax-amount">$50</p>
+                    </div>
+                </div>
+                <hr>
+                <div class="amount">
+                    <div class="left">
+                        <h4>Total</h4>
+                    </div>
+                    <div class="right">
+                        <p id="grand-total">$550</p>
+                    </div>
+                </div>
+            </div>
+            <button class="btn-style">Book Now</button>
+        </div>
+    </main>
+    <script>
+
+        function handleBuyChange(buy, isIncrease){
+            const buyInput = document.getElementById(buy + "-count");
+            const buyCount = parseInt(buyInput.value);
+            let buyNewCount = buyCount;
+            if(isIncrease == true){
+                buyNewCount = buyCount + 1;
+            }
+            if(isIncrease == false && buyCount >0){
+                buyNewCount = buyCount - 1;
+            }
+
+            buyInput.value = buyNewCount;
+            let buyTotal = 0;
+            if(buy == 'ticket'){
+                buyTotal = buyNewCount * (150);
+            }
+            if(buy == 'purchase'){
+                buyTotal = buyNewCount * (100);
+            }  
+            document.getElementById(buy + "-total").innerText = "$"+buyTotal;
+            calculateTotal();
+        }
+        
+        function calculateTotal(){
+            const ticketInput = document.getElementById("ticket-count");
+            const ticketCount = parseInt(ticketInput.value);
+
+            const purchaseCount = getInputValue("purchase");
+
+            const totalPrice = ticketCount * 150 + purchaseCount * 100;
+            document.getElementById("total-price").innerText = "$" + totalPrice;
+
+            const tax = totalPrice * 0.1;
+            document.getElementById("tax-amount").innerText = "$" + tax;
+
+            const grandTotal = totalPrice + tax;
+            document.getElementById("grand-total").innerText = "$" + grandTotal;
+
+        }
+
+        function getInputValue(buy){
+            const buyInput = document.getElementById(buy + "-count");
+            const buyCount = parseInt(buyInput.value);
+            return buyCount;
+        }
+
+        // function handleBuyChange(isIncrease){
+        //     const ticketInput = document.getElementById("purchase-count");
+        //     const ticketCount = parseInt(ticketInput.value);
+        //     let newTicketCount = ticketCount;
+        //     if(isIncrease == true){
+        //         newTicketCount = ticketCount + 1;
+        //     }
+        //     if(isIncrease == false && ticketCount >0){
+        //         newTicketCount = ticketCount - 1;
+        //     }
+
+        //     ticketInput.value = newTicketCount;
+        //     const ticketTotal = newTicketCount * (100);
+        //     document.getElementById("purchase-total").innerText = "$"+ticketTotal;
+        // } 
+
+        // function handleBuyChange(isIncrease){
+        //     const caseInput = document.getElementById("purchase-total");
+        //     const caseCount = parseInt(caseInput.value);
+        //     let newCaseCount = caseCount;
+        //     if(isIncrease == true){
+        //         newCaseCount = caseCount + 1;
+        //     }
+        //     if(isIncrease == false && caseCount >0){
+        //         newCaseCount = caseCount - 1;
+        //     }
+
+        //     caseInput.value = newCaseCount;
+        //     const caseTotal = newCaseCount * 100;
+        //     document.getElementById("purchase-count").innerText = '$'+caseTotal;
+        // }
+
+    //    document.getElementById('case-increase').addEventListener('click', function(){
+    //         const caseInput = document.getElementById('case-count');
+    //         const caseCount = parseInt(caseInput.value);
+    //         const caseNewCount = caseCount + 1;
+    //         caseInput.value = caseNewCount;
+    //         const caseTotal = caseNewCount * 69;
+    //         document.getElementById('case-total').innerText = '$'+caseTotal;
+    //     });
+
+    </script>
+    <!--Thank You-->
+</body>
+
+</html>
+
+</body>
+</html>
